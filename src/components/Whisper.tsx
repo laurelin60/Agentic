@@ -1,5 +1,6 @@
 "use client";
 
+import React, {useState} from 'react';
 import { AudioManager } from "../components/AudioManager";
 import Transcript from "../components/Transcript";
 import { useTranscriber } from "../hooks/useTranscriber";
@@ -11,6 +12,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Whisper = () => {
     const transcriber = useTranscriber();
+    const [message, setMessage] = useState('');
+
+    const handleKeyDown = (event:React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if(event.key == "Enter" &&  !event.shiftKey){
+            setMessage('');
+        }
+    } 
+
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        if(event.target.value.trim() != ''){
+            setMessage(event.target.value);
+        }
+    }
 
     return (
         <>
@@ -28,8 +42,11 @@ const Whisper = () => {
                     </TabsList>
                     <TabsContent value="text">
                         <Textarea
+                            value={message}
                             className="border-2 min-h-0 h-[52px] rounded-xl text-lg text-wrap resize-none"
                             placeholder="Chat with Alfred..."
+                            onChange={handleChange}
+                            onKeyDown={handleKeyDown}
                         />
                     </TabsContent>
 
