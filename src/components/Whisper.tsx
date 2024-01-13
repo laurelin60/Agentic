@@ -27,31 +27,32 @@ const Whisper = () => {
 
     return (
         <>
-            <div className="w-full mt-auto mb-8 flex-center mx-36 gap-2 flex flex-col">
+            <div className="w-full mt-auto mb-auto flex-center mx-36 gap-2 flex flex-col">
                 <div className="flex justify-center flex-col items-center">
                     <div className="container flex flex-col text-base justify-center items-center">
                         <Transcript transcribedData={transcriber.output} />
                     </div>
                 </div>
 
-                <Tabs defaultValue="text" className="w-[700px] mb-20">
-                    <TabsList className="">
-                        <TabsTrigger value="text">Text</TabsTrigger>
-                        <TabsTrigger value="speech">Speech</TabsTrigger>
-                    </TabsList>
+                <Tabs defaultValue="speech" className="w-[700px] mb-20">
+                    
                     <TabsContent value="text">
                         <Textarea
                             value={message}
                             className="border-2 min-h-0 h-[52px] rounded-xl text-lg text-wrap resize-none"
-                            placeholder="Chat with Alfred..."
+                            placeholder="Ask Alfred to do anything..."
                             onChange={handleChange}
                             onKeyDown={handleKeyDown}
                         />
                     </TabsContent>
-
                     <TabsContent value="speech">
                         <AudioManager transcriber={transcriber} />
                     </TabsContent>
+
+                    <TabsList className="mt-2">
+                        <TabsTrigger value="speech">Speech</TabsTrigger>
+                        <TabsTrigger value="text">Text</TabsTrigger>
+                    </TabsList>
                 </Tabs>
 
                 {/* <div>

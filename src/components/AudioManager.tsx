@@ -307,7 +307,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
 
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger className="h-[52px] flex-center text-xl w-full rounded-xl border-2 aspect-square gap-x-2">
-                    <p>Record</p> <Mic />
+                    <p>Speak</p> <Mic />
                 </PopoverTrigger>
                 <PopoverContent className="p-0 w-[400px]">
                     <div className="flex flex-col justify-center items-center rounded-lg bg-white shadow-xl shadow-black/5 ring-1 ring-slate-700/10">
