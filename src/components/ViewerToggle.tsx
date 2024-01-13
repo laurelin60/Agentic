@@ -19,9 +19,11 @@ const ToggleViewer = () => {
   }
 
   return (
-    <div>
+    <div className="flex">
+        <div className="pr-2">
+            viewer
+        </div>
         <Switch id="toggle viewer" onClick={handleClick}/> 
-        toggle viewer
     </div>
   );
 };

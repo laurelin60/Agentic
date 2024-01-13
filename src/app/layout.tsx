@@ -11,8 +11,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-    title: "kTemp",
-    description: "A template repository with a setup I love",
+    title: "Alfred",
+    description: "An assitant that will actually help you",
     icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 

@@ -47,9 +47,9 @@ const Profile = () => {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleProfile}>Profile</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleSettings}>Settings</DropdownMenuItem>
                 <DropdownMenuItem onClick={handleConnections}>Connections</DropdownMenuItem>
                 <DropdownMenuItem onClick={handleHistory}>History</DropdownMenuItem>
-                <DropdownMenuItem onClick={handleSettings}>Settings</DropdownMenuItem>
                 <DropdownMenuSeparator /> 
                 <DropdownMenuItem onClick={handleLogOut}>Log Out</DropdownMenuItem>
             </DropdownMenuContent>

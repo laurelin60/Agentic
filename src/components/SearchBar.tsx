@@ -39,8 +39,6 @@ const SearchBar = () => {
       onKeyDown={handleKeyDown}
       className='rounded-full'
       />
-
-    <Button onClick={handleSearch}>Search</Button>
     </div>
   );
 };

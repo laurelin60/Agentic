@@ -1,5 +1,7 @@
 import Profile from "@/components/Profile";
 import SearchBar from "@/components/SearchBar";
+import SearchTitle from "@/components/Title";
+import ToggleViewer from "@/components/ViewerToggle";
 import { db } from "@/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Loader2, Search, Square } from "lucide-react";
@@ -21,11 +23,14 @@ export default async function Home() {
 
     return (
         <>
-            
-            <div className="absolute top-0 right-0 px-2 py-2">
-                <Profile/>
+            <div className="flex">
+                <SearchTitle/>
+                <ToggleViewer/>
+                <div className="absolute top-0 right-0 px-2 py-2">
+                    <Profile/>
+                </div>
+                <SearchBar/> 
             </div>
-            <SearchBar/> 
         </>
     );
 };
