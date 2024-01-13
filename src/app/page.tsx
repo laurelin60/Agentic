@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Loader2, Square } from "lucide-react";
 import Link from "next/link";
+import SearchBar from "@/components/SearchBar";
 
 export default async function Home() {
     const { getUser } = getKindeServerSession();
@@ -16,15 +17,19 @@ export default async function Home() {
         : null;
 
     return (
-        <main className="wrapper flex-center text-3xl md:text-5xl font-semibold min-h-[calc(100vh-6rem)]">
-            <Link
-                href={"https://github.com/KevinWu098/kTemp"}
-                target="_blank"
-                referrerPolicy="no-referrer"
-                className="underline"
-            >
-                Hello World 💖
-            </Link>
-        </main>
+        <>
+            <SearchBar/>
+            <main className="wrapper flex-center text-3xl md:text-5xl font-semibold min-h-[calc(100vh-6rem)]">
+                <Link
+                    href={"https://github.com/KevinWu098/kTemp"}
+                    target="_blank"
+                    referrerPolicy="no-referrer"
+                    className="underline"
+                >
+                    Hello World 💖
+                </Link>
+            </main>
+        </>
+        
     );
 }
