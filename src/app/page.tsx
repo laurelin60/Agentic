@@ -59,7 +59,7 @@ export default async function Home() {
                 <div className="absolute top-0 right-0 px-2 py-2">
                     <Profile />
                 </div>
-                <SearchBar />
+                <Search />
             </div>
         </>
     );
