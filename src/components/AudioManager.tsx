@@ -21,6 +21,8 @@ import {
 import { Mic } from "lucide-react";
 import { Button } from "./ui/button";
 
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+
 function titleCase(str: string) {
     str = str.toLowerCase();
     return (str.match(/\w+.?/g) || [])
@@ -251,7 +253,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
 
     return (
         <>
-            <DropdownMenu>
+            {/* <DropdownMenu>
                 <DropdownMenuTrigger
                     asChild
                     className="h-[52px] rounded-xl border-2 aspect-square"
@@ -261,45 +263,43 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-fit">
-                    <DropdownMenuGroup>
-                        <DropdownMenuItem className="w-full h-full p-0">
-                            <UrlTile
-                                icon={<AnchorIcon />}
-                                text={"From URL"}
-                                onUrlUpdate={(e) => {
-                                    props.transcriber.onInputChange();
-                                    setAudioDownloadUrl(e);
-                                }}
-                            />
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="w-full h-full p-0">
-                            <FileTile
-                                icon={<FolderIcon />}
-                                text={"From file"}
-                                onFileUpdate={(decoded, blobUrl, mimeType) => {
-                                    props.transcriber.onInputChange();
-                                    setAudioData({
-                                        buffer: decoded,
-                                        url: blobUrl,
-                                        source: AudioSource.FILE,
-                                        mimeType: mimeType,
-                                    });
-                                }}
-                            />
-                        </DropdownMenuItem>
-                        {navigator.mediaDevices && (
-                            <RecordTile
-                                icon={<MicrophoneIcon />}
-                                text={"Record"}
-                                setAudioData={(e) => {
-                                    props.transcriber.onInputChange();
-                                    setAudioFromRecording(e);
-                                }}
-                            />
-                        )}
-                    </DropdownMenuGroup>
+                    <DropdownMenuItem className="w-full h-full p-0">
+                        <UrlTile
+                            icon={<AnchorIcon />}
+                            text={"From URL"}
+                            onUrlUpdate={(e) => {
+                                props.transcriber.onInputChange();
+                                setAudioDownloadUrl(e);
+                            }}
+                        />
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="w-full h-full p-0">
+                        <FileTile
+                            icon={<FolderIcon />}
+                            text={"From file"}
+                            onFileUpdate={(decoded, blobUrl, mimeType) => {
+                                props.transcriber.onInputChange();
+                                setAudioData({
+                                    buffer: decoded,
+                                    url: blobUrl,
+                                    source: AudioSource.FILE,
+                                    mimeType: mimeType,
+                                });
+                            }}
+                        />
+                    </DropdownMenuItem>
+                    {navigator.mediaDevices && (
+                        <RecordTile
+                            icon={<MicrophoneIcon />}
+                            text={"Record"}
+                            setAudioData={(e) => {
+                                props.transcriber.onInputChange();
+                                setAudioFromRecording(e);
+                            }}
+                        />
+                    )}
                 </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
 
             {/* {
                 <AudioDataBar
@@ -345,12 +345,69 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                         </>
                     )}
                 </div>
+
                 {
                     <AudioDataBar
-                        progress={isAudioLoading ? progress : +!!audioData}
+                    progress={isAudioLoading ? progress : +!!audioData}
                     />
                 }
             </div> */}
+
+            <Popover>
+                <PopoverTrigger className="h-[52px] flex-center rounded-xl border-2 aspect-square">
+                    <Mic />
+                </PopoverTrigger>
+                <PopoverContent className="p-0 w-[400px]">
+                    <div className="flex flex-col justify-center items-center rounded-lg bg-white shadow-xl shadow-black/5 ring-1 ring-slate-700/10">
+                        <div className="flex flex-row space-x-2 py-2 w-full px-2">
+                            <UrlTile
+                                icon={<AnchorIcon />}
+                                text={"From URL"}
+                                onUrlUpdate={(e) => {
+                                    props.transcriber.onInputChange();
+                                    setAudioDownloadUrl(e);
+                                }}
+                            />
+                            <VerticalBar />
+
+                            <FileTile
+                                icon={<FolderIcon />}
+                                text={"From file"}
+                                onFileUpdate={(decoded, blobUrl, mimeType) => {
+                                    props.transcriber.onInputChange();
+                                    setAudioData({
+                                        buffer: decoded,
+                                        url: blobUrl,
+                                        source: AudioSource.FILE,
+                                        mimeType: mimeType,
+                                    });
+                                }}
+                            />
+
+                            {navigator.mediaDevices && (
+                                <>
+                                    <VerticalBar />
+                                    <RecordTile
+                                        icon={<MicrophoneIcon />}
+                                        text={"Record Live"}
+                                        setAudioData={(e) => {
+                                            props.transcriber.onInputChange();
+                                            setAudioFromRecording(e);
+                                        }}
+                                    />
+                                </>
+                            )}
+                        </div>
+
+                        {/* {
+                    <AudioDataBar
+                    progress={isAudioLoading ? progress : +!!audioData}
+                    />
+                } */}
+                    </div>
+                </PopoverContent>
+            </Popover>
+
             {audioData && audioData.buffer && (
                 <>
                     <AudioPlayer
@@ -601,10 +658,10 @@ function UrlTile(props: {
     };
 
     return (
-        <>
+        <div className="w-full hover:bg-[#f5f5f4] rounded-lg">
             <Tile icon={props.icon} text={props.text} onClick={onClick} />
             <UrlModal show={showModal} onSubmit={onSubmit} onClose={onClose} />
-        </>
+        </div>
     );
 }
 
@@ -683,13 +740,13 @@ function FileTile(props: {
     };
 
     return (
-        <>
+        <div className="w-full hover:bg-[#f5f5f4] rounded-lg">
             <Tile
                 icon={props.icon}
                 text={props.text}
                 onClick={() => elem.click()}
             />
-        </>
+        </div>
     );
 }
 
@@ -716,7 +773,7 @@ function RecordTile(props: {
     };
 
     return (
-        <div className="w-full hover:bg-[#f5f5f4] rounded-lg">
+        <div className="w-full h-full hover:bg-[#f5f5f4] rounded-lg">
             <Tile icon={props.icon} text={props.text} onClick={onClick} />
             <RecordModal
                 show={showModal}
