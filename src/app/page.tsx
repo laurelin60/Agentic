@@ -35,8 +35,6 @@ export default async function Home() {
                 Hello World 💖
             </Link> */}
 
-                <AudioPlayer />
-
                 <div className="flex flex-col gap-y-2">
                     <div className="w-[700px]">
                         <AspectRatio ratio={16 / 9}>
