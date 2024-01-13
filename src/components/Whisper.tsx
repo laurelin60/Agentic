@@ -21,8 +21,8 @@ const Whisper = () => {
                     </div>
                 </div>
 
-                <Tabs defaultValue="text" className="w-[400px] mb-20">
-                    <TabsList>
+                <Tabs defaultValue="text" className="w-[700px] mb-20">
+                    <TabsList className="">
                         <TabsTrigger value="text">Text</TabsTrigger>
                         <TabsTrigger value="speech">Speech</TabsTrigger>
                     </TabsList>
