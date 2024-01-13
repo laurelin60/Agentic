@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -8,32 +8,32 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
-import { CircleUserRound } from 'lucide-react';
+  } from "@/components/ui/dropdown-menu";
 
-interface SearchBarProps {
-  onSearch: (searchTerm: string) => void;
-}
+import { CircleUserRound } from 'lucide-react';
+import { useRouter } from "next/navigation";
+import { Button } from './ui/button';
 
 const Profile = () => {
+  const router = useRouter();
   const handleProfile = () => {
-    alert('profile');
+   router.push('/profile');
   }
 
   const handleConnections = () => {
-    alert('connections')
+    router.push('/connections')
   }
 
   const handleHistory = () => {
-    alert('history')
+    router.push('/history');
   }
 
   const handleSettings = () => {
-    alert('settings')
+    router.push('/settings')
   }
 
   const handleLogOut = () => {
-    alert('Log Out')
+    alert('logged out!');
   }
 
   return (
@@ -42,7 +42,6 @@ const Profile = () => {
             <DropdownMenuTrigger>
                 <CircleUserRound className="size-10"/>
             </DropdownMenuTrigger>
-
             <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -51,9 +50,10 @@ const Profile = () => {
                 <DropdownMenuItem onClick={handleConnections}>Connections</DropdownMenuItem>
                 <DropdownMenuItem onClick={handleHistory}>History</DropdownMenuItem>
                 <DropdownMenuSeparator /> 
+
                 <DropdownMenuItem onClick={handleLogOut}>Log Out</DropdownMenuItem>
             </DropdownMenuContent>
-    </DropdownMenu>
+         </DropdownMenu>
     </div>
   );
 };
