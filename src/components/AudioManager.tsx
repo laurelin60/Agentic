@@ -11,6 +11,16 @@ import { Transcriber } from "../hooks/useTranscriber";
 import Progress from "./Progress";
 import AudioRecorder from "./AudioRecorder";
 
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Mic } from "lucide-react";
+import { Button } from "./ui/button";
+
 function titleCase(str: string) {
     str = str.toLowerCase();
     return (str.match(/\w+.?/g) || [])
@@ -241,7 +251,63 @@ export function AudioManager(props: { transcriber: Transcriber }) {
 
     return (
         <>
-            <div className="flex flex-col justify-center items-center rounded-lg bg-white shadow-xl shadow-black/5 ring-1 ring-slate-700/10">
+            <DropdownMenu>
+                <DropdownMenuTrigger
+                    asChild
+                    className="h-[52px] rounded-xl border-2 aspect-square"
+                >
+                    <Button variant="outline">
+                        <Mic />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-fit">
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem className="w-full h-full p-0">
+                            <UrlTile
+                                icon={<AnchorIcon />}
+                                text={"From URL"}
+                                onUrlUpdate={(e) => {
+                                    props.transcriber.onInputChange();
+                                    setAudioDownloadUrl(e);
+                                }}
+                            />
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="w-full h-full p-0">
+                            <FileTile
+                                icon={<FolderIcon />}
+                                text={"From file"}
+                                onFileUpdate={(decoded, blobUrl, mimeType) => {
+                                    props.transcriber.onInputChange();
+                                    setAudioData({
+                                        buffer: decoded,
+                                        url: blobUrl,
+                                        source: AudioSource.FILE,
+                                        mimeType: mimeType,
+                                    });
+                                }}
+                            />
+                        </DropdownMenuItem>
+                        {navigator.mediaDevices && (
+                            <RecordTile
+                                icon={<MicrophoneIcon />}
+                                text={"Record"}
+                                setAudioData={(e) => {
+                                    props.transcriber.onInputChange();
+                                    setAudioFromRecording(e);
+                                }}
+                            />
+                        )}
+                    </DropdownMenuGroup>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* {
+                <AudioDataBar
+                    progress={isAudioLoading ? progress : +!!audioData}
+                />
+            } */}
+
+            {/* <div className="flex flex-col justify-center items-center rounded-lg bg-white shadow-xl shadow-black/5 ring-1 ring-slate-700/10">
                 <div className="flex flex-row space-x-2 py-2 w-full px-2">
                     <UrlTile
                         icon={<AnchorIcon />}
@@ -284,7 +350,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                         progress={isAudioLoading ? progress : +!!audioData}
                     />
                 }
-            </div>
+            </div> */}
             {audioData && audioData.buffer && (
                 <>
                     <AudioPlayer
@@ -650,14 +716,14 @@ function RecordTile(props: {
     };
 
     return (
-        <>
+        <div className="w-full hover:bg-[#f5f5f4] rounded-lg">
             <Tile icon={props.icon} text={props.text} onClick={onClick} />
             <RecordModal
                 show={showModal}
                 onSubmit={onSubmit}
                 onClose={onClose}
             />
-        </>
+        </div>
     );
 }
 
@@ -708,7 +774,7 @@ function Tile(props: {
     return (
         <button
             onClick={props.onClick}
-            className="flex items-center justify-center rounded-lg p-2 bg-blue text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-200"
+            className="flex w-[100%] items-center justify-start rounded-lg p-3"
         >
             <div className="w-7 h-7">{props.icon}</div>
             {props.text && (
