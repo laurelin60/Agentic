@@ -251,6 +251,8 @@ export function AudioManager(props: { transcriber: Transcriber }) {
         }
     }, [audioDownloadUrl]);
 
+    const [open, setOpen] = useState(false);
+
     return (
         <div className="flex flex-col gap-y-4">
             {audioData && audioData.buffer && (
@@ -269,6 +271,15 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                             // isAudioLoading ||
                             isTranscribing={props.transcriber.isBusy}
                         />
+
+                        {props.transcriber.output && (
+                            <Button
+                                variant={"default"}
+                                className="bg-green-500 hover:bg-green-400"
+                            >
+                                Submit
+                            </Button>
+                        )}
 
                         <SettingsTile
                             className="absolute right-4"
@@ -294,7 +305,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                 </div>
             )}
 
-            <Popover>
+            <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger className="h-[52px] flex-center text-xl w-full rounded-xl border-2 aspect-square">
                     Record <Mic />
                 </PopoverTrigger>
