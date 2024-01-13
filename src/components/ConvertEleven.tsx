@@ -20,9 +20,9 @@ const AudioPlayer = () => {
     };
 
     // Use the useEffect hook to call the handleAudioFetch function once when the component mounts
-    useEffect(() => {
-        handleAudioFetch();
-    }, []);
+    // useEffect(() => {
+    //     handleAudioFetch();
+    // }, []);
 
     // Render an audio element with the URL if it is not null
     return (
