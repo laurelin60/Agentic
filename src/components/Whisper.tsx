@@ -16,14 +16,13 @@ const Whisper = () => {
 
     const handleKeyDown = (event:React.KeyboardEvent<HTMLTextAreaElement>) => {
         if(event.key == "Enter" &&  !event.shiftKey){
+            event.preventDefault();
             setMessage('');
         }
     } 
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        if(event.target.value.trim() != ''){
-            setMessage(event.target.value);
-        }
+        setMessage(event.target.value);
     }
 
     return (
