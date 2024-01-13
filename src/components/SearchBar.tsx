@@ -1,34 +1,44 @@
 "use client"
 
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, KeyboardEvent} from 'react';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
 
 interface SearchBarProps {
   onSearch: (searchTerm: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if(event.key == "Enter"){
+        handleSearch();
+    }
+  }
+
   const handleSearch = () => {
-    // Call the provided onSearch callback with the current searchTerm
-    // onSearch(searchTerm);
-    console.log(searchTerm);
+    if(searchTerm.trim() == ''){
+        return;
+    }
+
+    setSearchTerm(searchTerm);
     setSearchTerm('');
   };
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Enter an Action..."
-        value={searchTerm}
-        onChange={handleInputChange}
+      <Input 
+      placeholder='enter an action...' 
+      value={searchTerm} 
+      onChange={handleInputChange}
+      onKeyDown={handleKeyDown}
+      className='rounded-full'
       />
-      <button onClick={handleSearch}>Search</button>
     </div>
   );
 };
