@@ -25,6 +25,7 @@ export default async function Home() {
 
     return (
         <>
+            <SearchQuery />
             <div className="wrapper flex-center flex-col font-semibold min-h-[calc(10vh-6rem)]">
                 <SearchTitle/>
                 <Whisper />
