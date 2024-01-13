@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Profiler } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
+import AudioPlayer from "@/components/ConvertEleven";
 
 export default async function Home() {
     const { getUser } = getKindeServerSession();
@@ -33,6 +34,8 @@ export default async function Home() {
             >
                 Hello World 💖
             </Link> */}
+
+                <AudioPlayer />
 
                 <div className="flex flex-col gap-y-2">
                     <div className="w-[700px]">
