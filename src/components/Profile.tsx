@@ -1,35 +1,59 @@
 "use client"
 
-import React, { useState} from 'react';
+import React, { useState } from 'react';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"
+import { CircleUserRound } from 'lucide-react';
 
 interface SearchBarProps {
   onSearch: (searchTerm: string) => void;
 }
 
-const Profile: React.FC<SearchBarProps> = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState<string>('');
+const Profile = () => {
+  const handleProfile = () => {
+    alert('profile');
+  }
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
+  const handleConnections = () => {
+    alert('connections')
+  }
 
-  const handleSearch = () => {
-    // Call the provided onSearch callback with the current searchTerm
-    // onSearch(searchTerm);
-    console.log(searchTerm);
-    setSearchTerm('');
-  };
+  const handleHistory = () => {
+    alert('history')
+  }
+
+  const handleSettings = () => {
+    alert('settings')
+  }
+
+  const handleLogOut = () => {
+    alert('Log Out')
+  }
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="enter an action..."
-        value={searchTerm}
-        onChange={handleInputChange}
-        className=''
-      />
-      <button onClick={handleSearch}>Search</button>
+        <DropdownMenu>
+            <DropdownMenuTrigger>
+                <CircleUserRound className="size-10"/>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleProfile}>Profile</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleConnections}>Connections</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleHistory}>History</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleSettings}>Settings</DropdownMenuItem>
+                <DropdownMenuSeparator /> 
+                <DropdownMenuItem onClick={handleLogOut}>Log Out</DropdownMenuItem>
+            </DropdownMenuContent>
+    </DropdownMenu>
     </div>
   );
 };
