@@ -1,3 +1,4 @@
+import Whisper from "@/components/Whisper";
 import { db } from "@/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Loader2, Square } from "lucide-react";
@@ -17,14 +18,16 @@ export default async function Home() {
 
     return (
         <main className="wrapper flex-center text-3xl md:text-5xl font-semibold min-h-[calc(100vh-6rem)]">
-            <Link
+            {/* <Link
                 href={"https://github.com/KevinWu098/kTemp"}
                 target="_blank"
                 referrerPolicy="no-referrer"
                 className="underline"
             >
                 Hello World 💖
-            </Link>
+            </Link> */}
+
+            <Whisper />
         </main>
     );
 }
