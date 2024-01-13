@@ -7,25 +7,45 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Mic } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Whisper = () => {
     const transcriber = useTranscriber();
 
     return (
         <>
-            <div className="w-full mt-auto mb-8 flex-center mx-36 gap-2">
-                <Textarea
-                    className="border-2 min-h-0 h-[52px] rounded-xl text-lg text-wrap resize-none"
-                    placeholder="Chat with Alfred..."
-                />
-                <AudioManager transcriber={transcriber} />
-            </div>
-
-            {/* <div className="flex justify-center items-center min-h-screen">
-                <div className="container flex flex-col justify-center items-center">
-                    <Transcript transcribedData={transcriber.output} />
+            <div className="w-full mt-auto mb-8 flex-center mx-36 gap-2 flex flex-col">
+                <div className="flex justify-center flex-col items-center">
+                    <div className="container flex flex-col text-base justify-center items-center">
+                        <Transcript transcribedData={transcriber.output} />
+                    </div>
                 </div>
-            </div> */}
+
+                <Tabs defaultValue="text" className="w-[400px] mb-20">
+                    <TabsList>
+                        <TabsTrigger value="text">Text</TabsTrigger>
+                        <TabsTrigger value="speech">Speech</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="text">
+                        <Textarea
+                            className="border-2 min-h-0 h-[52px] rounded-xl text-lg text-wrap resize-none"
+                            placeholder="Chat with Alfred..."
+                        />
+                    </TabsContent>
+
+                    <TabsContent value="speech">
+                        <AudioManager transcriber={transcriber} />
+                    </TabsContent>
+                </Tabs>
+
+                {/* <div>
+                    <Textarea
+                        className="border-2 min-h-0 h-[52px] rounded-xl text-lg text-wrap resize-none"
+                        placeholder="Chat with Alfred..."
+                    />
+                    <AudioManager transcriber={transcriber} />
+                </div> */}
+            </div>
         </>
     );
 };

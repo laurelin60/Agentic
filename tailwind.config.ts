@@ -42,14 +42,14 @@ const config = {
         extend: {
             colors: {
                 // shadcn
-                text: "#020817",
+                text: "#F87315",
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
                 ring: "hsl(var(--ring))",
                 background: "hsl(var(--background))",
                 foreground: "hsl(var(--foreground))",
                 primary: {
-                    DEFAULT: "#020817",
+                    DEFAULT: "#F87315",
                     foreground: "hsl(var(--primary-foreground))",
                 },
                 secondary: {
