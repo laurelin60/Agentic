@@ -8,6 +8,7 @@ export function useWorker(messageEventHandler: MessageEventHandler): Worker {
   // Create new worker once and never again
   const [worker] = useState(() => createWorker(messageEventHandler));
   return worker;
+  
 }
 
 function createWorker(messageEventHandler: MessageEventHandler): Worker {

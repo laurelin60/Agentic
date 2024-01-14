@@ -1,14 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 
-const SearchTitle = () => {
-  return (
-    <>
-      <img src="/alfred_logo.png" alt="yo" className="w-32 h-32" />
-      <div className="text-5xl truncate mt-24">How can I help you today?</div>
-    </>
-  );
+export const Hints = () => {
+    const hintList = ['Start by saying "Hey Alfred..."'];
+
+    useEffect(() => {
+        const updateHints = () => {
+            console.log("update hints");
+        };
+
+        const intervalId = setInterval(updateHints, 3000);
+
+        return () => clearInterval(intervalId);
+    }, []);
+
+    return (
+        <>
+        <div className="text-1m opacity-60">{hintList[0]}</div>
+        </>
+    );
 };
 
-export default SearchTitle;
+export const SearchTitle = () => {
+    return (
+        <>
+            <img src="/alfred_logo.png" alt="yo" className="w-32 h-32 opacity-80" />
+            <div className="text-5xl mb-4 opacity-80">How can I help you today?</div>
+            <Hints />
+        </>
+    );
+};
