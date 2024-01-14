@@ -17,17 +17,20 @@ export const Hints = () => {
 
     return (
         <>
-        <div className="text-1m opacity-60">{hintList[0]}</div>
+            <div className="text-1m opacity-60">{hintList[0]}</div>
         </>
     );
 };
 
 export const SearchTitle = () => {
     return (
-        <>
-            <img src="/alfred_logo.png" alt="yo" className="w-32 h-32 opacity-80" />
-            <div className="text-5xl mb-4 opacity-80">How can I help you today?</div>
-            <Hints />
-        </>
+        <div className="my-auto flex-center flex-col gap-y-2">
+            <img src="/alfred_logo.png" alt="yo" className="w-16 h-16" />
+
+            <div className="text-2xl font-semibold">
+                How can I help you today?
+            </div>
+            {/* <Hints /> */}
+        </div>
     );
 };
