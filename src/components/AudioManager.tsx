@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Modal from "./modal/Modal";
 import { UrlInput } from "./modal/UrlInput";
@@ -11,17 +11,7 @@ import { Transcriber } from "../hooks/useTranscriber";
 import Progress from "./Progress";
 import AudioRecorder from "./AudioRecorder";
 
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Mic } from "lucide-react";
 import { Button } from "./ui/button";
-
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 function titleCase(str: string) {
     str = str.toLowerCase();
@@ -257,15 +247,12 @@ export function AudioManager(props: { transcriber: Transcriber }) {
         <div className="flex flex-col gap-y-4">
             {audioData && audioData.buffer && (
                 <div className="flex flex-col gap-0 text-base">
+                    <AudioPlayer
+                        audioUrl={audioData.url}
+                        mimeType={audioData.mimeType}
+                    />
+
                     <div className="relative w-full flex justify-center items-center">
-                        {props.transcriber.output && (
-                            <Button
-                                variant={"default"}
-                                className="bg-green-500 hover:bg-green-400"
-                            >
-                                Submit
-                            </Button>
-                        )}
                         <TranscribeButton
                             onClick={() => {
                                 props.transcriber.start(audioData.buffer);
@@ -274,6 +261,16 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                             // isAudioLoading ||
                             isTranscribing={props.transcriber.isBusy}
                         />
+
+                        {props.transcriber.output && (
+                            <Button
+                                variant={"default"}
+                                className="bg-green-500 hover:bg-green-400"
+                            >
+                                Submit
+                            </Button>
+                        )}
+
                         <SettingsTile
                             className="absolute right-4"
                             transcriber={props.transcriber}
@@ -298,60 +295,53 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                 </div>
             )}
 
-            <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger className="h-[52px] flex-center text-xl w-full rounded-xl border-2 aspect-square gap-x-2">
-                    <p>Speak</p> <Mic />
-                </PopoverTrigger>
-                <PopoverContent className="p-0 w-[400px]">
-                    <div className="flex flex-col justify-center items-center rounded-lg bg-white shadow-xl shadow-black/5 ring-1 ring-slate-700/10">
-                        <div className="flex flex-row space-x-2 py-2 w-full px-2">
-                            <UrlTile
-                                icon={<AnchorIcon />}
-                                text={"From URL"}
-                                onUrlUpdate={(e) => {
-                                    props.transcriber.onInputChange();
-                                    setAudioDownloadUrl(e);
-                                }}
-                            />
-                            <VerticalBar />
-
-                            <FileTile
-                                icon={<FolderIcon />}
-                                text={"From file"}
-                                onFileUpdate={(decoded, blobUrl, mimeType) => {
-                                    props.transcriber.onInputChange();
-                                    setAudioData({
-                                        buffer: decoded,
-                                        url: blobUrl,
-                                        source: AudioSource.FILE,
-                                        mimeType: mimeType,
-                                    });
-                                }}
-                            />
-
-                            {navigator.mediaDevices && (
-                                <>
-                                    <VerticalBar />
-                                    <RecordTile
-                                        icon={<MicrophoneIcon />}
-                                        text={"Record Live"}
-                                        setAudioData={(e) => {
-                                            props.transcriber.onInputChange();
-                                            setAudioFromRecording(e);
-                                        }}
-                                    />
-                                </>
-                            )}
-                        </div>
-
-                        {/* {
-                    <AudioDataBar
-                    progress={isAudioLoading ? progress : +!!audioData}
+            <div className="flex flex-col justify-center items-center rounded-lg bg-white shadow-xl shadow-black/5 ring-1 ring-slate-700/10">
+                <div className="flex flex-row space-x-2 w-full">
+                    <UrlTile
+                        icon={<AnchorIcon />}
+                        text={"From URL"}
+                        onUrlUpdate={(e) => {
+                            props.transcriber.onInputChange();
+                            setAudioDownloadUrl(e);
+                        }}
                     />
-                } */}
-                    </div>
-                </PopoverContent>
-            </Popover>
+                    <VerticalBar />
+
+                    <FileTile
+                        icon={<FolderIcon />}
+                        text={"From file"}
+                        onFileUpdate={(decoded, blobUrl, mimeType) => {
+                            props.transcriber.onInputChange();
+                            setAudioData({
+                                buffer: decoded,
+                                url: blobUrl,
+                                source: AudioSource.FILE,
+                                mimeType: mimeType,
+                            });
+                        }}
+                    />
+
+                    {navigator.mediaDevices && (
+                        <>
+                            <VerticalBar />
+                            <RecordTile
+                                icon={<MicrophoneIcon />}
+                                text={"Record Live"}
+                                setAudioData={(e) => {
+                                    props.transcriber.onInputChange();
+                                    setAudioFromRecording(e);
+                                }}
+                            />
+                        </>
+                    )}
+                </div>
+
+                {isAudioLoading && (
+                    <AudioDataBar
+                        progress={isAudioLoading ? progress : +!!audioData}
+                    />
+                )}
+            </div>
         </div>
     );
 }
