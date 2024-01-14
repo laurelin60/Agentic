@@ -13,7 +13,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-    title: "Alfred",
+    title: "Agentic",
     description: "An assitant that will actually help you",
     icons: [{ rel: "icon", url: "public/logo.ico" }],
 };

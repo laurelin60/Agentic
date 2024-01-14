@@ -10,7 +10,7 @@ const Footer = () => {
                 <Link href="/about">About</Link>
 
                 <p className="text-gray">
-                    Alfred can make mistakes. Please be patient if it messes up.
+                    Agentic can make mistakes. Please be patient if it messes up.
                 </p>
             </div>
         </>

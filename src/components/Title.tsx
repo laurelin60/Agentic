@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 
 export const Hints = () => {
-    const hintList = ['Start by saying "Hey Alfred..."'];
+    const hintList = ['Start by asking Agentic to do something'];
 
     useEffect(() => {
         const updateHints = () => {

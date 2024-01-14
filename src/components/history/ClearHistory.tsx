@@ -28,7 +28,7 @@ const ClearHistory = () => {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will clear all of your Alfred search history. You will never
+              This will clear all of your Agentic search history. You will never
               be able to recover it again!
             </AlertDialogDescription>
           </AlertDialogHeader>
