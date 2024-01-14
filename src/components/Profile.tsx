@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
     DropdownMenu,
@@ -11,60 +9,65 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { CircleUserRound } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
+import {
+    getKindeServerSession,
+    LoginLink,
+    LogoutLink,
+} from "@kinde-oss/kinde-auth-nextjs/server";
+import { db } from "@/db";
 
-const Profile = () => {
-    const router = useRouter();
-    const handleProfile = () => {
-        router.push("/profile");
-    };
+const Profile = async () => {
+    const { getUser } = getKindeServerSession();
+    const user = await getUser();
 
-    const handleConnections = () => {
-        router.push("/connections");
-    };
+    // const dbUser = user
+    //     ? await db.user.findFirst({
+    //           where: {
+    //               id: user?.id,
+    //           },
+    //       })
+    //     : null;
 
-    const handleHistory = () => {
-        router.push("/history");
-    };
+    const handleProfile = () => {};
 
-    const handleSettings = () => {
-        router.push("/settings");
-    };
+    const handleConnections = () => {};
+
+    const handleHistory = () => {};
+
+    const handleSettings = () => {};
 
     const handleLogOut = () => {
         alert("logged out!");
     };
 
     return (
-        <div>
-            <DropdownMenu>
-                <DropdownMenuTrigger>
-                    <CircleUserRound className="size-10 font-light" />
-                </DropdownMenuTrigger>
-
-                <DropdownMenuContent>
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleProfile}>
-                        Profile
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleSettings}>
-                        Settings
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleConnections}>
-                        Connections
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleHistory}>
-                        History
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-
-                    <DropdownMenuItem onClick={handleLogOut}>
-                        Log Out
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
+        <div className="flex-center flex-row gap-x-2">
+            {user ? (
+                <DropdownMenu>
+                    <DropdownMenuTrigger>
+                        <CircleUserRound className="size-10 font-light" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                        <DropdownMenuItem>Settings</DropdownMenuItem>
+                        <DropdownMenuItem>Connections</DropdownMenuItem>
+                        <DropdownMenuItem>History</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <LogoutLink>
+                                <Button>Logout</Button>
+                            </LogoutLink>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            ) : (
+                <LoginLink>
+                    <Button>Login</Button>
+                </LoginLink>
+            )}
         </div>
     );
 };

@@ -7,10 +7,21 @@ import { Textarea } from "./ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Graphics } from "./Graphics";
 import { SearchTitle } from "./Title";
+import { AspectRatio } from "./ui/aspect-ratio";
+import Image from "next/image";
+
+type ServerMessage = {
+    type: string;
+    message: string;
+};
 
 const ChatInput = () => {
     const transcriber = useTranscriber();
     const [message, setMessage] = useState("");
+    const [serverMessage, setServerMessage] = useState<ServerMessage>({
+        type: "action",
+        message: "haha",
+    });
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.key == "Enter" && !event.shiftKey) {
@@ -25,10 +36,29 @@ const ChatInput = () => {
 
     return (
         <>
-            {!(message.length > 0) && (
+            {message.length > 0 ? (
                 <>
                     <SearchTitle />
                     <Graphics />
+                </>
+            ) : (
+                <>
+                    <div className="w-[400px] flex flex-col justify-between">
+                        <img
+                            src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?cs=srgb&dl=pexels-chevanon-photography-1108099.jpg&fm=jpg"
+                            alt="Image"
+                            className="rounded-md object-cover w-[700px]"
+                        />
+
+                        <div className="bg-red-500">
+                            {serverMessage && (
+                                <p>
+                                    {serverMessage.type}:{" "}
+                                    {serverMessage.message}
+                                </p>
+                            )}
+                        </div>
+                    </div>
                 </>
             )}
 
