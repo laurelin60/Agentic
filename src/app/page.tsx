@@ -28,7 +28,6 @@ export default async function Home() {
         <>
             <div className="wrapper flex-center flex-col font-semibold min-h-[calc(100vh-6rem)]">
                 <ChatInput />
-
                 <div className="pb-8">
                     <WebSocket />
                 </div>

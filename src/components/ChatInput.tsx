@@ -12,6 +12,7 @@ import Image from "next/image";
 import Transcript from "./whisper/Transcript";
 import chalk from "chalk";
 import { cn } from "@/lib/utils";
+import { textToSpeech } from "/Users/andrew/GitHub/alfred-frontend/src/elevenlabs.js";
 
 type Message = {
     type: string;
@@ -29,10 +30,45 @@ const ChatInput = () => {
     const [serverMessages, setServerMessages] = useState<Message[]>([
         {
             type: "info",
-            message: "Hey there! I'm Agentic, your personal assistant.",
+            message:
+                "Hey there! I'm Agentic, your personal assistant. \n Start by giving me an action.",
             fromUser: false,
         },
     ]);
+
+    // const playAudio = (audioBuffer: ArrayBuffer) => {
+    //     // Decode the ArrayBuffer into an AudioBuffer
+    //     const audioContext = new (window.AudioContext || window.AudioContext)();
+
+    //     audioContext.decodeAudioData(audioBuffer, function (decodedData) {
+    //         // Create a buffer source node
+    //         const source = audioContext.createBufferSource();
+
+    //         // Set the buffer to the decoded audio data
+    //         source.buffer = decodedData;
+
+    //         // Connect the source to the audio context's destination (speakers)
+    //         source.connect(audioContext.destination);
+
+    //         // Start playing the audio
+    //         source.start();
+    //     });
+    // };
+
+    const handleAudio = async (message: string) => {
+        var msg = new SpeechSynthesisUtterance();
+        msg.text = "Hello World";
+        window.speechSynthesis.speak(msg);
+        // const data = await textToSpeech(message);
+        // console.log(data);
+        // playAudio(data);
+        // console.log('bruh'+ data);
+        // var blob = new Blob([data], { type: "audio/mpeg" });
+        // var url = URL.createObjectURL(blob);
+        // console.log('URL: ' + url);
+        // var audio = new Audio(url);
+        // audio.play();
+    };
 
     if (!idk) {
         wsClient.addEventListener("open", async function open() {
@@ -46,6 +82,7 @@ const ChatInput = () => {
                 let parsed = JSON.parse(message.data);
                 if (parsed.type === "msg") {
                     console.log(chalk.yellow("MESSAGE TO USER:"), parsed.msg);
+
                     setServerMessages((pastServerMessages) => [
                         ...pastServerMessages,
                         {
