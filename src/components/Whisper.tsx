@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import { AudioManager } from "../components/AudioManager";
 import Transcript from "../components/Transcript";
 import { useTranscriber } from "../hooks/useTranscriber";
@@ -11,60 +11,59 @@ import { Mic } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Whisper = () => {
-    const transcriber = useTranscriber();
-    const [message, setMessage] = useState('');
+  const transcriber = useTranscriber();
+  const [message, setMessage] = useState("");
 
-    const handleKeyDown = (event:React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if(event.key == "Enter" &&  !event.shiftKey){
-            event.preventDefault();
-            setMessage('');
-        }
-    } 
-
-    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setMessage(event.target.value);
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key == "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      setMessage("");
     }
+  };
 
-    return (
-        <>
-            <div className="w-full mt-auto mb-auto flex-center mx-36 gap-2 flex flex-col">
-                <div className="flex justify-center flex-col items-center">
-                    <div className="container flex flex-col text-base justify-center items-center">
-                        <Transcript transcribedData={transcriber.output} />
-                    </div>
-                </div>
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(event.target.value);
+  };
 
-                <Tabs defaultValue="speech" className="w-[700px] mb-20">
-                    
-                    <TabsContent value="text">
-                        <Textarea
-                            value={message}
-                            className="border-2 min-h-0 h-[52px] rounded-xl text-lg text-wrap resize-none"
-                            placeholder="Ask Alfred to do anything..."
-                            onChange={handleChange}
-                            onKeyDown={handleKeyDown}
-                        />
-                    </TabsContent>
-                    <TabsContent value="speech">
-                        <AudioManager transcriber={transcriber} />
-                    </TabsContent>
+  return (
+    <>
+      <div className="w-full mt-auto mb-auto flex-center mx-36 gap-2 flex flex-col">
+        <div className="flex justify-center flex-col items-center">
+          <div className="container flex flex-col text-base justify-center items-center">
+            <Transcript transcribedData={transcriber.output} />
+          </div>
+        </div>
 
-                    <TabsList className="mt-2">
-                        <TabsTrigger value="speech">Speech</TabsTrigger>
-                        <TabsTrigger value="text">Text</TabsTrigger>
-                    </TabsList>
-                </Tabs>
+        <Tabs defaultValue="speech" className="w-[700px] mb-20">
+          <TabsContent value="text">
+            <Textarea
+              value={message}
+              className="border-2 min-h-0 h-[52px] rounded-xl text-lg text-wrap resize-none"
+              placeholder="Ask Alfred to do anything..."
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+            />
+          </TabsContent>
+          <TabsContent value="speech">
+            <AudioManager transcriber={transcriber} />
+          </TabsContent>
 
-                {/* <div>
+          <TabsList className="mt-2">
+            <TabsTrigger value="speech">Speech</TabsTrigger>
+            <TabsTrigger value="text">Text</TabsTrigger>
+          </TabsList>
+        </Tabs>
+
+        {/* <div>
                     <Textarea
                         className="border-2 min-h-0 h-[52px] rounded-xl text-lg text-wrap resize-none"
                         placeholder="Chat with Alfred..."
                     />
                     <AudioManager transcriber={transcriber} />
                 </div> */}
-            </div>
-        </>
-    );
+      </div>
+    </>
+  );
 };
 
 export default Whisper;

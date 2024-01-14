@@ -13,36 +13,36 @@ import AudioPlayer from "@/components/ConvertEleven";
 import { Footer } from "@/components/Footer";
 
 export default async function Home() {
-    const { getUser } = getKindeServerSession();
-    const user = await getUser();
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
 
-    const dbUser = user
-        ? await db.user.findFirst({
-              where: {
-                  id: user?.id,
-              },
-          })
-        : null;
+  const dbUser = user
+    ? await db.user.findFirst({
+        where: {
+          id: user?.id,
+        },
+      })
+    : null;
 
-    return (
-        <>
-            <div className="wrapper flex-center flex-col font-semibold min-h-[calc(10vh-6rem)]">
-                <SearchTitle/>
-                <Whisper />
-                <div className="py-100">
-                    <ToggleViewer />
-                </div>
-            </div>
+  return (
+    <>
+      <div className="wrapper flex-center flex-col font-semibold min-h-[calc(10vh-6rem)]">
+        <SearchTitle />
+        <Whisper />
+        <div className="py-100">
+          <ToggleViewer />
+        </div>
+      </div>
 
-            <div className="flex">
-                <div className="absolute top-0 right-0 px-2 py-2">
-                    <Profile />
-                </div>
-            </div>
+      <div className="flex">
+        <div className="absolute top-0 right-0 px-2 py-2">
+          <Profile />
+        </div>
+      </div>
 
-            <div className="">
-                <Footer />
-            </div>
-        </>
-    );
+      <div className="">
+        <Footer />
+      </div>
+    </>
+  );
 }

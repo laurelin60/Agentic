@@ -1,7 +1,9 @@
 # kTemp
+
 > ### A template repository with a setup I love
 
 ## Contains:
+
 - React
 - Typescript
 - Next.js 14

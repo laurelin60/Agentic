@@ -1,29 +1,27 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
-import { Switch } from './ui/switch';
+import React, { useState } from "react";
+import { Switch } from "./ui/switch";
 
 interface SearchBarProps {
   onSearch: (searchTerm: string) => void;
 }
 
 const ToggleViewer = () => {
-  const [toggled, setToggled] = useState(false)
-  
+  const [toggled, setToggled] = useState(false);
+
   const handleClick = () => {
-    if(toggled){
-        setToggled(false);
+    if (toggled) {
+      setToggled(false);
     } else {
-        setToggled(true);
+      setToggled(true);
     }
-  }
+  };
 
   return (
     <div className="flex">
-        <div className="pr-2">
-            viewer
-        </div>
-        <Switch id="toggle viewer" onClick={handleClick}/> 
+      <div className="pr-2">viewer</div>
+      <Switch id="toggle viewer" onClick={handleClick} />
     </div>
   );
 };

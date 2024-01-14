@@ -2,8 +2,8 @@ import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 
 interface VertAlignTextareaProps
-    extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-    className: string;
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  className: string;
 }
 
 // const VertAlignTextarea = ({
