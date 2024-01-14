@@ -9,7 +9,6 @@ export const SearchQuery = () => {
 };
 
 export const SearchAction = () => {
-  const searchAction = "searching ebay";
-
+  const [searchAction, setSearchAction] = useState("searching ebay");
   return <div className="text-2xl">{searchAction}</div>;
 };
