@@ -7,11 +7,7 @@ const Footer = () => {
     return (
         <>
             <div className="flex flex-row gap-x-10 justify-center">
-                <Link href="/about">About</Link>
-
-                <p className="text-gray">
-                    Agentic can make mistakes. Please be patient if it messes up.
-                </p>
+                <p className="text-gray text-lg py-8">Made with 💖</p>
             </div>
         </>
     );
