@@ -133,7 +133,10 @@ export enum AudioSource {
     RECORDING = "RECORDING",
 }
 
-export function AudioManager(props: { transcriber: Transcriber }) {
+export function AudioManager(props: {
+    transcriber: Transcriber;
+    wsClient: WebSocket;
+}) {
     const [progress, setProgress] = useState<number | undefined>(undefined);
     const [audioData, setAudioData] = useState<
         | {
@@ -242,6 +245,14 @@ export function AudioManager(props: { transcriber: Transcriber }) {
     }, [audioDownloadUrl]);
 
     const [open, setOpen] = useState(false);
+    const handleClick = () => {
+        props.wsClient.send(
+            JSON.stringify({
+                type: "msg",
+                msg: props.transcriber.output,
+            })
+        );
+    };
 
     return (
         <div className="flex flex-col gap-y-4">
@@ -266,6 +277,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                             <Button
                                 variant={"default"}
                                 className="bg-green-500 hover:bg-green-400"
+                                onClick={handleClick}
                             >
                                 Submit
                             </Button>

@@ -10,11 +10,34 @@ import { SearchTitle } from "./Title";
 import { AspectRatio } from "./ui/aspect-ratio";
 import Image from "next/image";
 import Transcript from "./whisper/Transcript";
+import chalk from "chalk";
 
 type ServerMessage = {
     type: string;
     message: string;
 };
+
+const wsClient = new WebSocket("ws://localhost:6969");
+
+wsClient.addEventListener("open", async function open() {
+    console.log("Connected to server");
+});
+
+wsClient.addEventListener(
+    "message",
+    function incoming(message: { toString: () => any }) {
+        let raw = message.toString();
+        let parsed = JSON.parse(raw);
+        if (parsed.type === "msg") {
+            console.log(chalk.yellow("SERVER SENT:"), parsed.msg);
+            process.stdout.write(">");
+        } else if (parsed.type === "info") {
+            console.log(chalk.blue("INFO:"), parsed.msg);
+        } else if (parsed.type === "action") {
+            console.log(chalk.gray("ACTION:"), parsed.msg);
+        }
+    }
+);
 
 const ChatInput = () => {
     const transcriber = useTranscriber();
@@ -37,7 +60,7 @@ const ChatInput = () => {
 
     return (
         <>
-            {message.length > 0 ? (
+            {!(message.length > 0) ? (
                 <>
                     <SearchTitle />
                     <Graphics />
@@ -85,7 +108,10 @@ const ChatInput = () => {
                     </TabsContent>
 
                     <TabsContent value="speech">
-                        <AudioManager transcriber={transcriber} />
+                        <AudioManager
+                            transcriber={transcriber}
+                            wsClient={wsClient}
+                        />
                     </TabsContent>
 
                     <TabsList className="mt-2">

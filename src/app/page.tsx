@@ -1,10 +1,7 @@
 import ChatInput from "@/components/ChatInput";
-import { SearchTitle } from "@/components/Title";
-import { Button } from "@/components/ui/button";
 import { db } from "@/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import WebSocket from "@/components/WebSocket";
-import SearchDisplay from "@/components/SearchQueryDisplay";
 
 export default async function Home() {
     const { getUser } = getKindeServerSession();
