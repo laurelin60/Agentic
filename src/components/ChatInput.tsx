@@ -9,6 +9,7 @@ import { Graphics } from "./Graphics";
 import { SearchTitle } from "./Title";
 import { AspectRatio } from "./ui/aspect-ratio";
 import Image from "next/image";
+import Transcript from "./whisper/Transcript";
 
 type ServerMessage = {
     type: string;
@@ -63,6 +64,12 @@ const ChatInput = () => {
             )}
 
             <div className="w-full mt-auto flex-center mx-36 gap-2 flex flex-col">
+                <div className="flex justify-center flex-col items-center">
+                    <div className="container flex flex-col text-base justify-center items-center">
+                        <Transcript transcribedData={transcriber.output} />
+                    </div>
+                </div>
+
                 <Tabs
                     defaultValue="speech"
                     className="w-[300px] xs:w-[350px] sm:w-[600px] lg:w-[900px] mb-20"

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { db } from "@/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import WebSocket from "@/components/WebSocket";
+import SearchDisplay from "@/components/SearchQueryDisplay";
 
 export default async function Home() {
     const { getUser } = getKindeServerSession();
@@ -31,6 +32,7 @@ export default async function Home() {
             <div className="wrapper flex-center flex-col font-semibold min-h-[calc(100vh-6rem)]">
                 <ChatInput />
 
+                <SearchDisplay />
                 <p>{user?.given_name}</p>
 
                 {/* <div className="py-100">

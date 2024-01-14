@@ -2,8 +2,17 @@
 
 import React, { useState } from "react";
 import { Button } from "./ui/button";
-import { AspectRatio } from "@radix-ui/react-aspect-ratio";
-import { SearchQuery, SearchAction } from "./SearchQuery";
+
+export const SearchQuery = () => {
+    const query = "Finding a wheelchair under 100 dollars";
+
+    return <div className="text-3xl font-bold">{query}</div>;
+};
+
+export const SearchAction = () => {
+    const [searchAction, setSearchAction] = useState("searching ebay");
+    return <div className="text-2xl">{searchAction}</div>;
+};
 
 const SearchDisplay = () => {
     const [searchingQuery, setSearching] = useState(true);
