@@ -25,7 +25,11 @@ const SearchDisplay = () => {
                         <SearchAction />
                     </span>
 
-                    <img src="loading.gif" alt="loading gif" className="flex h-16 w-16 justify-center opacity-60 mb-6"/>
+                    <img
+                        src="loading.gif"
+                        alt="loading gif"
+                        className="flex h-16 w-16 justify-center opacity-60 mb-6"
+                    />
 
                     <Button className="mb-6 text-2xl" onClick={handleStop}>
                         stop
