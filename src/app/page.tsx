@@ -1,7 +1,6 @@
-import Whisper from "@/components/Whisper";
-import Profile from "@/components/Profile";
+import Whisper from "@/components/whisper/Whisper";
 import { SearchTitle } from "@/components/Title";
-import ToggleViewer from "@/components/ViewerToggle";
+import ToggleViewer from "@/components/whisper/ViewerToggle";
 import { db } from "@/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Loader2, Search, Square } from "lucide-react";
@@ -26,11 +25,6 @@ export default async function Home() {
 
     return (
         <>
-            <div className="flex">
-                <div className="absolute top-0 right-0 px-2 py-2">
-                    <Profile />
-                </div>
-            </div>
             <span className="py-100" />
             <div className="wrapper flex-center flex-col font-semibold min-h-[calc(10vh-6rem)]">
                 <SearchTitle />
