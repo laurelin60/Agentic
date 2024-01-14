@@ -14,6 +14,7 @@ import {
     getKindeServerSession,
     LoginLink,
     LogoutLink,
+    RegisterLink,
 } from "@kinde-oss/kinde-auth-nextjs/server";
 import { db } from "@/db";
 
@@ -64,9 +65,14 @@ const Profile = async () => {
                     </DropdownMenuContent>
                 </DropdownMenu>
             ) : (
-                <LoginLink>
-                    <Button>Login</Button>
-                </LoginLink>
+                <>
+                    <LoginLink>
+                        <Button variant={"ghost"}>Login</Button>
+                    </LoginLink>
+                    <RegisterLink>
+                        <Button>Register</Button>
+                    </RegisterLink>
+                </>
             )}
         </div>
     );
