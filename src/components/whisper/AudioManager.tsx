@@ -2,16 +2,16 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Modal from "./modal/Modal";
-import { UrlInput } from "./modal/UrlInput";
+import Modal from "../modal/Modal";
+import { UrlInput } from "../modal/UrlInput";
 import AudioPlayer from "./AudioPlayer";
 import { TranscribeButton } from "./TranscribeButton";
-import Constants from "../utils/Constants";
-import { Transcriber } from "../hooks/useTranscriber";
-import Progress from "./Progress";
+import Constants from "../../utils/Constants";
+import { Transcriber } from "../../hooks/useTranscriber";
+import Progress from "../Progress";
 import AudioRecorder from "./AudioRecorder";
 
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 function titleCase(str: string) {
     str = str.toLowerCase();

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Switch } from "./ui/switch";
+import { Switch } from "../ui/switch";
 
 interface SearchBarProps {
     onSearch: (searchTerm: string) => void;

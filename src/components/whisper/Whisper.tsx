@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { AudioManager } from "../components/AudioManager";
+import { AudioManager } from "./AudioManager";
 import Transcript from "../components/Transcript";
-import { useTranscriber } from "../hooks/useTranscriber";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
+import { useTranscriber } from "../../hooks/useTranscriber";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Mic } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
