@@ -1,40 +1,20 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-export const FooterWarning = () => {
-  return (
-    <>
-      <p className="text-gray">
-        Alfred can make mistakes. Please be patient if it messes up.
-      </p>
-    </>
-  );
+const Footer = () => {
+    return (
+        <>
+            <div className="flex flex-row gap-x-10 justify-center">
+                <Link href="/about">About</Link>
+
+                <p className="text-gray">
+                    Alfred can make mistakes. Please be patient if it messes up.
+                </p>
+            </div>
+        </>
+    );
 };
 
-export const FooterLink = (props: { linkName: string; linkPath: string }) => {
-  const router = useRouter();
-  const { linkName, linkPath } = props;
-
-  const handleLink = () => {
-    router.push(linkPath);
-  };
-
-  return (
-    <>
-      <p onClick={handleLink}> {linkName} </p>
-    </>
-  );
-};
-
-export const Footer = () => {
-  return (
-    <>
-      <div className="flex flex-row gap-x-10 justify-center">
-        <FooterLink linkName="About" linkPath="/about" />
-        <FooterWarning />
-      </div>
-    </>
-  );
-};
+export default Footer;
