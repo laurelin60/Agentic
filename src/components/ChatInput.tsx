@@ -11,6 +11,7 @@ import { AspectRatio } from "./ui/aspect-ratio";
 import Image from "next/image";
 import Transcript from "./whisper/Transcript";
 import chalk from "chalk";
+import { cn } from "@/lib/utils";
 
 type Message = {
     type: string;
@@ -25,11 +26,13 @@ let idk = false;
 const ChatInput = () => {
     const transcriber = useTranscriber();
     const [message, setMessage] = useState("");
-    const [serverMessages, setServerMessages] = useState<Message[]>([{
-        type: "info",
-        message: "Hey there! I'm Agentic, your personal assistant.",
-        fromUser: false,
-    }]);
+    const [serverMessages, setServerMessages] = useState<Message[]>([
+        {
+            type: "info",
+            message: "Hey there! I'm Agentic, your personal assistant.",
+            fromUser: false,
+        },
+    ]);
 
     if (!idk) {
         wsClient.addEventListener("open", async function open() {
@@ -43,25 +46,34 @@ const ChatInput = () => {
                 let parsed = JSON.parse(message.data);
                 if (parsed.type === "msg") {
                     console.log(chalk.yellow("MESSAGE TO USER:"), parsed.msg);
-                    setServerMessages([...serverMessages, {
-                        type: "msg",
-                        message: parsed.msg,
-                        fromUser: false
-                    }]);
+                    setServerMessages((pastServerMessages) => [
+                        ...pastServerMessages,
+                        {
+                            type: "msg",
+                            message: parsed.msg,
+                            fromUser: false,
+                        },
+                    ]);
                 } else if (parsed.type === "info") {
                     console.log(chalk.blue("INFO:"), parsed.msg);
-                    setServerMessages([...serverMessages, {
-                        type: "info",
-                        message: parsed.msg,
-                        fromUser: false
-                    }]);
+                    setServerMessages((pastServerMessages) => [
+                        ...pastServerMessages,
+                        {
+                            type: "info",
+                            message: parsed.msg,
+                            fromUser: false,
+                        },
+                    ]);
                 } else if (parsed.type === "action") {
                     console.log(chalk.gray(parsed.msg));
-                    setServerMessages([...serverMessages, {
-                        type: "action",
-                        message: parsed.msg,
-                        fromUser: false
-                    }]);
+                    setServerMessages((pastServerMessages) => [
+                        ...pastServerMessages,
+                        {
+                            type: "action",
+                            message: parsed.msg,
+                            fromUser: false,
+                        },
+                    ]);
                 }
             }
         );
@@ -74,7 +86,7 @@ const ChatInput = () => {
             serverMessages.push({
                 type: "msg",
                 message: message,
-                fromUser: true
+                fromUser: true,
             });
             wsClient.send(JSON.stringify({ type: "msg", msg: message }));
             event.preventDefault();
@@ -86,6 +98,7 @@ const ChatInput = () => {
         setMessage(event.target.value);
     };
 
+    console.log(serverMessages);
     return (
         <>
             {false ? (
@@ -103,30 +116,38 @@ const ChatInput = () => {
                         /> */}
 
                         <div>
-                            {serverMessages && 
+                            {serverMessages &&
                                 serverMessages.map((message, index) => (
-                                <div
-                                    key={message.message + index}
-                                    className={`flex flex-row ${
-                                        message.fromUser ? "justify-end" : "justify-start"
-                                    }`}
-                                >
                                     <div
-                                        className={`${
+                                        key={message.message + index}
+                                        className={cn(
+                                            "flex flex-row",
                                             message.fromUser
-                                                ? "bg-blue-200"
-                                                : "bg-gray-200"
-                                        } rounded-xl p-2 m-2`}
-                                        style={{
-                                            maxWidth: "80%",
-                                            color: message.type === "action" ? "gray" : message.type === "info" ? "#8091ba" : "black",
-                                        }}
+                                                ? "justify-end"
+                                                : "justify-start"
+                                        )}
                                     >
-                                        {message.message}
+                                        <div
+                                            className={`${
+                                                message.fromUser
+                                                    ? "bg-blue-200"
+                                                    : "bg-gray-100"
+                                            } rounded-xl p-2 m-2`}
+                                            style={{
+                                                maxWidth: "80%",
+                                                color:
+                                                    message.type === "action"
+                                                        ? "gray"
+                                                        : message.type ===
+                                                            "info"
+                                                          ? "#8091ba"
+                                                          : "black",
+                                            }}
+                                        >
+                                            {message.message}
+                                        </div>
                                     </div>
-                                </div>
-                                ))
-                            }
+                                ))}
                         </div>
                     </div>
                 </>
