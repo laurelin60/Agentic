@@ -12,43 +12,71 @@ import Image from "next/image";
 import Transcript from "./whisper/Transcript";
 import chalk from "chalk";
 
-type ServerMessage = {
+type Message = {
     type: string;
     message: string;
+    fromUser: boolean;
 };
 
 const wsClient = new WebSocket("ws://localhost:6969");
 
-wsClient.addEventListener("open", async function open() {
-    console.log("Connected to server");
-});
-
-wsClient.addEventListener(
-    "message",
-    function incoming(message: { toString: () => any }) {
-        let raw = message.toString();
-        let parsed = JSON.parse(raw);
-        if (parsed.type === "msg") {
-            console.log(chalk.yellow("SERVER SENT:"), parsed.msg);
-            process.stdout.write(">");
-        } else if (parsed.type === "info") {
-            console.log(chalk.blue("INFO:"), parsed.msg);
-        } else if (parsed.type === "action") {
-            console.log(chalk.gray("ACTION:"), parsed.msg);
-        }
-    }
-);
+let idk = false;
 
 const ChatInput = () => {
     const transcriber = useTranscriber();
     const [message, setMessage] = useState("");
-    const [serverMessage, setServerMessage] = useState<ServerMessage>({
-        type: "action",
-        message: "haha",
-    });
+    const [serverMessages, setServerMessages] = useState<Message[]>([{
+        type: "info",
+        message: "Hey there! I'm Agentic, your personal assistant.",
+        fromUser: false,
+    }]);
+
+    if (!idk) {
+        wsClient.addEventListener("open", async function open() {
+            console.log("Connected to server");
+        });
+
+        wsClient.addEventListener(
+            "message",
+            function incoming(message: MessageEvent) {
+                console.log(chalk.cyan("Server raw response:"), message.data);
+                let parsed = JSON.parse(message.data);
+                if (parsed.type === "msg") {
+                    console.log(chalk.yellow("MESSAGE TO USER:"), parsed.msg);
+                    setServerMessages([...serverMessages, {
+                        type: "msg",
+                        message: parsed.msg,
+                        fromUser: false
+                    }]);
+                } else if (parsed.type === "info") {
+                    console.log(chalk.blue("INFO:"), parsed.msg);
+                    setServerMessages([...serverMessages, {
+                        type: "info",
+                        message: parsed.msg,
+                        fromUser: false
+                    }]);
+                } else if (parsed.type === "action") {
+                    console.log(chalk.gray(parsed.msg));
+                    setServerMessages([...serverMessages, {
+                        type: "action",
+                        message: parsed.msg,
+                        fromUser: false
+                    }]);
+                }
+            }
+        );
+        idk = true;
+    }
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.key == "Enter" && !event.shiftKey) {
+            console.log("Sending message:", message);
+            serverMessages.push({
+                type: "msg",
+                message: message,
+                fromUser: true
+            });
+            wsClient.send(JSON.stringify({ type: "msg", msg: message }));
             event.preventDefault();
             setMessage("");
         }
@@ -60,27 +88,45 @@ const ChatInput = () => {
 
     return (
         <>
-            {!(message.length > 0) ? (
+            {false ? (
                 <>
                     <SearchTitle />
                     <Graphics />
                 </>
             ) : (
                 <>
-                    <div className="w-[400px] flex flex-col justify-between">
-                        <img
+                    <div className="w-[600px] flex flex-col justify-between">
+                        {/* <img
                             src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?cs=srgb&dl=pexels-chevanon-photography-1108099.jpg&fm=jpg"
                             alt="Image"
                             className="rounded-md object-cover w-[700px]"
-                        />
+                        /> */}
 
-                        <div className="bg-red-500">
-                            {serverMessage && (
-                                <p>
-                                    {serverMessage.type}:{" "}
-                                    {serverMessage.message}
-                                </p>
-                            )}
+                        <div>
+                            {serverMessages && 
+                                serverMessages.map((message, index) => (
+                                <div
+                                    key={message.message + index}
+                                    className={`flex flex-row ${
+                                        message.fromUser ? "justify-end" : "justify-start"
+                                    }`}
+                                >
+                                    <div
+                                        className={`${
+                                            message.fromUser
+                                                ? "bg-blue-200"
+                                                : "bg-gray-200"
+                                        } rounded-xl p-2 m-2`}
+                                        style={{
+                                            maxWidth: "80%",
+                                            color: message.type === "action" ? "gray" : message.type === "info" ? "#8091ba" : "black",
+                                        }}
+                                    >
+                                        {message.message}
+                                    </div>
+                                </div>
+                                ))
+                            }
                         </div>
                     </div>
                 </>
@@ -111,6 +157,7 @@ const ChatInput = () => {
                         <AudioManager
                             transcriber={transcriber}
                             wsClient={wsClient}
+                            setServerMessages={setServerMessages}
                         />
                     </TabsContent>
 
