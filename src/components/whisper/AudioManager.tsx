@@ -7,7 +7,7 @@ import { UrlInput } from "../modal/UrlInput";
 import AudioPlayer from "./AudioPlayer";
 import { TranscribeButton } from "./TranscribeButton";
 import Constants from "../../utils/Constants";
-import { Transcriber } from "../../hooks/useTranscriber";
+import { Transcriber, useTranscriber } from "../../hooks/useTranscriber";
 import Progress from "./Progress";
 import AudioRecorder from "./AudioRecorder";
 
@@ -136,7 +136,7 @@ export enum AudioSource {
 export function AudioManager(props: {
     transcriber: Transcriber;
     wsClient: WebSocket;
-    setServerMessages: any
+    setServerMessages: any;
 }) {
     const [progress, setProgress] = useState<number | undefined>(undefined);
     const [audioData, setAudioData] = useState<
@@ -248,20 +248,33 @@ export function AudioManager(props: {
     const [open, setOpen] = useState(false);
     const handleClick = () => {
         if (props.transcriber.output) {
-            console.log("Sending voice message:", props.transcriber.output.text);
+            console.log(
+                "Sending voice message:",
+                props.transcriber.output.text
+            );
             props.wsClient.send(
                 JSON.stringify({
                     type: "msg",
-                    msg: "[User used voice message]" + props.transcriber.output.text,
+                    msg:
+                        "[User used voice message]" +
+                        props.transcriber.output.text,
                 })
             );
             if (props.transcriber.output) {
-                props.setServerMessages((pastServerMessages: any[]) => [...pastServerMessages, {type: "user", message: props.transcriber.output?.text, fromUser: true}]);
+                props.setServerMessages((pastServerMessages: any[]) => [
+                    ...pastServerMessages,
+                    {
+                        type: "user",
+                        message: props.transcriber.output?.text,
+                        fromUser: true,
+                    },
+                ]);
             } else {
                 console.log("Could not send voice message: no output");
             }
-        }
-        else {
+            setAudioData(undefined);
+            props.transcriber.output.chunks = [];
+        } else {
             console.log("Could not send voice message: no output");
         }
     };
