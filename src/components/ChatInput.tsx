@@ -12,6 +12,8 @@ import Image from "next/image";
 import Transcript from "./whisper/Transcript";
 import chalk from "chalk";
 import { cn } from "@/lib/utils";
+import textToSpeech from "@/elevenlabs";
+import AudioPlayer from "./ConvertEleven";
 
 type Message = {
     type: string;
@@ -213,6 +215,11 @@ const ChatInput = () => {
                     </TabsList>
                 </Tabs>
             </div>
+
+            <AudioPlayer
+                message={serverMessages[serverMessages.length - 1].message}
+                key={serverMessages.length}
+            />
         </>
     );
 };
