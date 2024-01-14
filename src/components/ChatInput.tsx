@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { AudioManager } from "./AudioManager";
-import { useTranscriber } from "../../hooks/useTranscriber";
-import { Textarea } from "../ui/textarea";
+import { AudioManager } from "./whisper/AudioManager";
+import { useTranscriber } from "../hooks/useTranscriber";
+import { Textarea } from "./ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Graphics } from "./Graphics";
+import { SearchTitle } from "./Title";
 
-const Whisper = () => {
+const ChatInput = () => {
     const transcriber = useTranscriber();
     const [message, setMessage] = useState("");
 
@@ -23,6 +25,13 @@ const Whisper = () => {
 
     return (
         <>
+            {!(message.length > 0) && (
+                <>
+                    <SearchTitle />
+                    <Graphics />
+                </>
+            )}
+
             <div className="w-full mt-auto flex-center mx-36 gap-2 flex flex-col">
                 <Tabs
                     defaultValue="speech"
@@ -52,4 +61,4 @@ const Whisper = () => {
     );
 };
 
-export default Whisper;
+export default ChatInput;
