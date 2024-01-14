@@ -216,10 +216,12 @@ const ChatInput = () => {
                 </Tabs>
             </div>
 
-            <AudioPlayer
-                message={serverMessages[serverMessages.length - 1].message}
-                key={serverMessages.length}
-            />
+            {serverMessages[serverMessages.length - 1].type == "msg" && (
+                <AudioPlayer
+                    message={serverMessages[serverMessages.length - 1].message}
+                    key={serverMessages.length}
+                />
+            )}
         </>
     );
 };
