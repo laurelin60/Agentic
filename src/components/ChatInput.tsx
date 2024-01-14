@@ -74,7 +74,20 @@ const ChatInput = () => {
                             fromUser: false,
                         },
                     ]);
+                } else if (parsed.type === "complete") {
+                    console.log(chalk.green(parsed.msg));
+                    // setServerMessages((pastServerMessages) => [
+                    //     ...pastServerMessages,
+                    //     {
+                    //         type: "complete",
+                    //         message: parsed.msg,
+                    //         fromUser: false,
+                    //     },
+                    // ]);
                 }
+                const messageContainer =
+                    document.getElementById("messageContainer");
+                messageContainer.scrollTop = messageContainer.scrollHeight;
             }
         );
         idk = true;
@@ -91,6 +104,9 @@ const ChatInput = () => {
             wsClient.send(JSON.stringify({ type: "msg", msg: message }));
             event.preventDefault();
             setMessage("");
+            const messageContainer =
+                document.getElementById("messageContainer");
+            messageContainer.scrollTop = messageContainer.scrollHeight;
         }
     };
 
@@ -98,7 +114,6 @@ const ChatInput = () => {
         setMessage(event.target.value);
     };
 
-    console.log(serverMessages);
     return (
         <>
             {false ? (
@@ -115,7 +130,10 @@ const ChatInput = () => {
                             className="rounded-md object-cover w-[700px]"
                         /> */}
 
-                        <div>
+                        <div
+                            id="messageContainer"
+                            className="max-h-[500px] overflow-y-scroll"
+                        >
                             {serverMessages &&
                                 serverMessages.map((message, index) => (
                                     <div
@@ -171,6 +189,13 @@ const ChatInput = () => {
                             placeholder="Ask Agentic to do anything..."
                             onChange={handleChange}
                             onKeyDown={handleKeyDown}
+                            disabled={
+                                (serverMessages[serverMessages.length - 1]
+                                    .type !== "msg" ||
+                                    serverMessages[serverMessages.length - 1]
+                                        .fromUser) &&
+                                serverMessages.length != 1
+                            }
                         />
                     </TabsContent>
 
