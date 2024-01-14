@@ -2,12 +2,8 @@
 
 import React, { useState } from "react";
 import { AudioManager } from "./AudioManager";
-import Transcript from "../components/Transcript";
 import { useTranscriber } from "../../hooks/useTranscriber";
-import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Mic } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Whisper = () => {
@@ -48,14 +44,6 @@ const Whisper = () => {
                         <TabsTrigger value="text">Text</TabsTrigger>
                     </TabsList>
                 </Tabs>
-
-                {/* <div>
-                    <Textarea
-                        className="border-2 min-h-0 h-[52px] rounded-xl text-lg text-wrap resize-none"
-                        placeholder="Chat with Alfred..."
-                    />
-                    <AudioManager transcriber={transcriber} />
-                </div> */}
             </div>
         </>
     );

@@ -9,7 +9,6 @@ import { Profiler } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 import AudioPlayer from "@/components/ConvertEleven";
-import { Footer } from "@/components/Footer";
 
 export default async function Home() {
     const { getUser } = getKindeServerSession();
@@ -26,14 +25,15 @@ export default async function Home() {
     return (
         <>
             <span className="py-100" />
-            <div className="wrapper flex-center flex-col font-semibold min-h-[calc(10vh-6rem)]">
+            <div className="wrapper flex-center flex-col font-semibold min-h-[calc(100vh-6rem)]">
                 <SearchTitle />
+
                 <Whisper />
+
                 {/* <div className="py-100">
-          <ToggleViewer />
-        </div> */}
+                    <ToggleViewer searchingQuery={true} />
+                </div> */}
             </div>
-            {/* <Footer /> */}
         </>
     );
 }
