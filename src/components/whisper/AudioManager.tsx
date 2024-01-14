@@ -729,7 +729,7 @@ function Tile(props: {
         >
             <div className="w-7 h-7">{props.icon}</div>
             {props.text && (
-                <div className="ml-2 break-text text-center text-md w-30">
+                <div className="ml-2 break-text text-center text-sm md:text-md w-30">
                     {props.text}
                 </div>
             )}
