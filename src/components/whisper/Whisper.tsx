@@ -23,7 +23,7 @@ const Whisper = () => {
 
     return (
         <>
-            <div className="w-full mt-4 mb-auto flex-center mx-36 gap-2 flex flex-col">
+            <div className="w-full mt-auto flex-center mx-36 gap-2 flex flex-col">
                 <Tabs defaultValue="speech" className="w-[700px] mb-20">
                     <TabsContent value="text">
                         <Textarea

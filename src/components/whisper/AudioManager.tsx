@@ -296,7 +296,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
             )}
 
             <div className="flex flex-col justify-center items-center rounded-lg bg-white shadow-xl shadow-black/5 ring-1 ring-slate-700/10">
-                <div className="flex flex-row space-x-2 w-full">
+                <div className="flex flex-row w-full">
                     <UrlTile
                         icon={<AnchorIcon />}
                         text={"From URL"}
@@ -307,6 +307,20 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                     />
                     <VerticalBar />
 
+                    {navigator.mediaDevices && (
+                        <>
+                            <RecordTile
+                                icon={<MicrophoneIcon />}
+                                text={"Record Live"}
+                                setAudioData={(e) => {
+                                    props.transcriber.onInputChange();
+                                    setAudioFromRecording(e);
+                                }}
+                            />
+                        </>
+                    )}
+
+                    <VerticalBar />
                     <FileTile
                         icon={<FolderIcon />}
                         text={"From file"}
@@ -320,20 +334,6 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                             });
                         }}
                     />
-
-                    {navigator.mediaDevices && (
-                        <>
-                            <VerticalBar />
-                            <RecordTile
-                                icon={<MicrophoneIcon />}
-                                text={"Record Live"}
-                                setAudioData={(e) => {
-                                    props.transcriber.onInputChange();
-                                    setAudioFromRecording(e);
-                                }}
-                            />
-                        </>
-                    )}
                 </div>
 
                 {isAudioLoading && (
@@ -667,7 +667,7 @@ function RecordTile(props: {
     };
 
     return (
-        <div className="w-full h-full hover:bg-[#f5f5f4] rounded-lg">
+        <div className="w-full h-full hover:bg-[#f5f5f4] border-b-primary border-b-2">
             <Tile icon={props.icon} text={props.text} onClick={onClick} />
             <RecordModal
                 show={showModal}
