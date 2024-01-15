@@ -24,7 +24,13 @@
 
 ### 🥇 SB Hacks X First Place Winner
 
+<p align="center">
+    <a href="https://devpost.com/software/agentic?ref_content=my-projects-tab&ref_feature=my_projects">
+        <img width="1728" alt="Chatbot Page" src="https://github.com/laurelin60/Agentic/assets/100006999/b2a65541-6250-41a0-b4ce-608f38d33468">
+    </a>
+</p>
+
 ### 🚧 README Under Construction 🚧
 ---
 
-Made with ❤️ by Andrew Wang, Uno Pasadhika, Kevin Wu, Andrew Wang
+Made with ❤️ by [Andrew Wang](https://www.linkedin.com/in/andrew-wang0/), [Uno Pasadhika](https://www.linkedin.com/in/wpasadhika/), [Kevin Wu](https://www.linkedin.com/in/kevinwu098/), [Andrew Wang](https://www.linkedin.com/in/andreww05/)
