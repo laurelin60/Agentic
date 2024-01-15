@@ -30,7 +30,25 @@
     </a>
 </p>
 
-### 🚧 README Under Construction 🚧
+## Getting Started
+
+1. Make sure you have [Node.js 20.10.0](https://nodejs.org/en/download)
+2. Clone the repo
+3. Copy `.env.example` to `.env`
+4. Run:
+
+```bash 
+npm i
+```
+
+```bash
+npm run dev #client
+```
+
+```bash
+npm start #server
+```
+
 ---
 
 Made with ❤️ by [Andrew Wang](https://www.linkedin.com/in/andrew-wang0/), [Uno Pasadhika](https://www.linkedin.com/in/wpasadhika/), [Kevin Wu](https://www.linkedin.com/in/kevinwu098/), [Andrew Wang](https://www.linkedin.com/in/andreww05/)
