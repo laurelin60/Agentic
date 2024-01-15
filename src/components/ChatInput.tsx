@@ -125,7 +125,7 @@ const ChatInput = () => {
                 }
                 const messageContainer =
                     document.getElementById("messageContainer");
-                messageContainer.scrollTop = messageContainer.scrollHeight;
+                messageContainer!.scrollTop = messageContainer!.scrollHeight;
             }
         );
         idk = true;
@@ -144,7 +144,7 @@ const ChatInput = () => {
             setMessage("");
             const messageContainer =
                 document.getElementById("messageContainer");
-            messageContainer.scrollTop = messageContainer.scrollHeight;
+            messageContainer!.scrollTop = messageContainer!.scrollHeight;
         }
     };
 
