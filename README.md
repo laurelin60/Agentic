@@ -33,7 +33,7 @@
 
 ## Getting Started
 
-1. Make sure you have [Node.js 20.10.0](https://nodejs.org/en/download)
+1. Make sure you have [Node.js 18.18.2](https://nodejs.org/en/download)
 2. Clone the repo
 3. Copy `.env.example` to `.env`
 4. Run:
